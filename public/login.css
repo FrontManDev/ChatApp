@@ -1,0 +1,147 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+  box-sizing: border-box;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #031716;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.login-content {
+  width: 100%;
+  max-width: 500px;
+  min-height: 500px;
+  background-color: #0a7075;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+  text-align: center;
+  margin: 30px 0;
+  color: white;
+  font-size: 2rem;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 25px;
+  width: 100%;
+}
+
+form label {
+  color: white;
+  align-self: flex-start;
+  font-size: 1.1rem;
+  margin-bottom: -15px;
+}
+
+form input {
+  width: 100%;
+  padding: 15px;
+  border-radius: 5px;
+  border: none;
+  font-size: 1rem;
+  background-color: #f0f0f0;
+}
+
+form input:focus {
+  outline: 2px solid #032f30;
+}
+
+form button {
+  width: 100%;
+  padding: 15px;
+  border-radius: 5px;
+  border: none;
+  background-color: #032f30;
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+
+form button:hover {
+  background-color: #054548;
+}
+
+form p {
+  color: white;
+  margin-top: 10px;
+}
+
+form p a {
+  color: #032f30;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+form p a:hover {
+  color: #054548;
+  text-decoration: underline;
+}
+
+/* Tablet View */
+@media (max-width: 768px) {
+  .login-content {
+    padding: 25px;
+    min-height: 450px;
+  }
+  
+  h2 {
+    font-size: 1.8rem;
+    margin: 20px 0;
+  }
+  
+  form {
+    gap: 20px;
+  }
+  
+  form input, form button {
+    padding: 12px;
+  }
+}
+
+/* Mobile View */
+@media (max-width: 480px) {
+  .login-content {
+    padding: 20px;
+    min-height: 400px;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+    margin: 15px 0;
+  }
+  
+  form label {
+    font-size: 1rem;
+  }
+  
+  form input, form button {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+  
+  form p {
+    font-size: 0.9rem;
+  }
+}

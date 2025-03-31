@@ -1,0 +1,160 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+  box-sizing: border-box;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #031716;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.register-content {
+  width: 100%;
+  max-width: 500px;
+  background-color: #0a7075;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+  text-align: center;
+  margin: 20px 0 30px;
+  color: white;
+  font-size: 2rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+form label {
+  color: white;
+  font-size: 1rem;
+}
+
+form input {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 5px;
+  border: none;
+  font-size: 1rem;
+  background-color: #f0f0f0;
+}
+
+form input:focus {
+  outline: 2px solid #032f30;
+}
+
+.name-fields {
+  display: flex;
+  gap: 15px;
+}
+
+.name-fields .form-group {
+  width: 100%;
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  border-radius: 5px;
+  border: none;
+  background-color: #032f30;
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #054548;
+}
+
+.login-link {
+  text-align: center;
+  color: white;
+  margin-top: 15px;
+}
+
+.login-link a {
+  color: #032f30;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.login-link a:hover {
+  color: #054548;
+  text-decoration: underline;
+}
+
+/* Tablet View */
+@media (max-width: 768px) {
+  .register-content {
+    padding: 25px;
+  }
+  
+  h2 {
+    font-size: 1.8rem;
+    margin: 15px 0 25px;
+  }
+  
+  form {
+    gap: 15px;
+  }
+  
+  form input, button {
+    padding: 12px;
+  }
+}
+
+/* Mobile View */
+@media (max-width: 480px) {
+  .register-content {
+    padding: 20px;
+  }
+  
+  h2 {
+    font-size: 1.6rem;
+    margin: 10px 0 20px;
+  }
+  
+  .name-fields {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  form label {
+    font-size: 0.95rem;
+  }
+  
+  form input, button {
+    padding: 10px 12px;
+    font-size: 0.95rem;
+  }
+  
+  .login-link {
+    font-size: 0.95rem;
+  }
+}
