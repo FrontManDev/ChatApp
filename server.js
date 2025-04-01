@@ -4,6 +4,7 @@ const express = require("express");
 const path = require("path");
 const app = express();
 const { PrismaClient } = require("@prisma/client");
+const { execSync } = require('child_process');
 const prisma = new PrismaClient();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
