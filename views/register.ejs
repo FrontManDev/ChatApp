@@ -79,11 +79,11 @@
           const token = result.Token;
             if (token) {
               localStorage.setItem("token", token);
-              window.location.href = "/chat";
+              window.location.href = `/chat/${user.id}`;
             } else {
               alert("Login failed: No token received.");
             }
-          window.location.href = "/chat"; 
+          window.location.href = `/chat/${user.id}`; 
         } else {
           alert(result.message);
         }
