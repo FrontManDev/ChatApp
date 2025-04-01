@@ -14,6 +14,15 @@ const { Server } = require('socket.io');
 const server = http.createServer(app);
 const io = new Server(server);
 
+try {
+  console.log("Applying database migrations...");
+  execSync("npx prisma migrate deploy", { stdio: "inherit" });
+  console.log("Migrations applied successfully.");
+} catch (error) {
+  console.error("Error applying migrations:", error.message);
+  process.exit(1);
+}
+
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.set("view engine", "ejs");
