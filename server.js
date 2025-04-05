@@ -31,10 +31,12 @@ app.set("views", path.join(__dirname, "views"));
 
 io.on('connection', (socket) => {
   console.log('New client connected:', socket.id);
+  
   socket.on('join', (userId) => {
     socket.join(userId);
     console.log(`User ${userId} joined their room`);
   });
+
   socket.on('sendMessage', async ({ senderId, receiverId, content }) => {
     try {
       const message = await prisma.message.create({
@@ -56,6 +58,7 @@ io.on('connection', (socket) => {
           }
         }
       });
+      
       io.to(receiverId).emit('receiveMessage', {
         id: message.id,
         content: message.content,
@@ -65,6 +68,7 @@ io.on('connection', (socket) => {
         receiverName: message.receiver.firstName,
         createdAt: message.createdAt
       });
+      
       socket.emit('messageSent', {
         id: message.id,
         content: message.content,
@@ -77,6 +81,7 @@ io.on('connection', (socket) => {
       socket.emit('error', 'Failed to send message');
     }
   });
+
   socket.on('disconnect', () => {
     console.log('Client disconnected:', socket.id);
   });
@@ -96,17 +101,21 @@ app.post("/login", async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({ message: "Enter all the fields" });
     }
+    
     const User = await prisma.user.findUnique({ where: { email } });
     if (!User) {
       return res.status(400).json({ message: "Incorrect email or password" });
     }
+    
     const isMatch = await bcrypt.compare(password, User.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Incorrect email or password" });
     }
+    
     const Token = jwt.sign({ id: User.id, email: User.email }, TokenKey, {
       expiresIn: Time,
     });
+    
     return res.status(200).json({
       message: "User successfully logged in",
       Token,
@@ -127,16 +136,16 @@ app.get("/register", (req, res) => {
 app.get("/chat/:id", async (req, res) => {
   try {
     const currentUserId = req.params.id; 
-    const users = await prisma.user.findMany({ where: {id: { not: currentUserId }}
+    const users = await prisma.user.findMany({ 
+      where: { id: { not: currentUserId } }
     });
-    res.render("chat", { 
-      users,
-    });
+    res.render("chat", { users });
   } catch (error) {
     console.error("Server Error:", error);
     res.status(500).json({ message: "Error in server" });
   }
 });
+
 app.get('/messages/:senderId/:receiverId', async (req, res) => {
   try {
     const { senderId, receiverId } = req.params;
@@ -176,13 +185,9 @@ app.get('/messages/:senderId/:receiverId', async (req, res) => {
 app.get('/users', async (req, res) => {
   try {
     const users = await prisma.user.findMany();
-    if (users) {
-      res.status(200).json({ message: "all the users ", users: users });
-    } else {
-      res.status(400).json({ message: "bad request" });
-    }
+    res.status(200).json({ message: "All the users", users });
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: err.message });
   }
 });
 
@@ -190,20 +195,28 @@ app.post("/register", async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body;
     if (!firstName || !lastName || !email || !password) {
-      return res.status(400).json({ message: "enter all the fields" });
+      return res.status(400).json({ message: "Enter all the fields" });
     }
+    
     const hashpassword = await bcrypt.hash(password, 10);
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
-      return res.status(400).json({ message: "this email is already in use" });
+      return res.status(400).json({ message: "This email is already in use" });
     }
+    
     const newUser = await prisma.user.create({
       data: { firstName, lastName, email, password: hashpassword },
     });
+    
     const Token = jwt.sign({ id: newUser.id, email: newUser.email }, TokenKey, {
       expiresIn: Time,
     });
-    res.status(201).json({ message: "User registered successfully", User: {id: User.id,firstName: User.firstName}, Token });
+    
+    res.status(201).json({ 
+      message: "User registered successfully", 
+      User: newUser, 
+      Token 
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
@@ -221,9 +234,10 @@ app.get("/delete", async (req, res) => {
       count: deletedUsers.count,
     });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Server error", error: error.message });
+    return res.status(500).json({ 
+      message: "Server error", 
+      error: error.message 
+    });
   }
 });
 
